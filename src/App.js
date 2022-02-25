@@ -5,15 +5,20 @@ import Eventos from './components/Eventos';
 import Parrafo from './components/Parrafo';
 import Variables from './components/Variables';
 import Listas from './components/Listas';
+import Formulario from './components/Formulario';
 
 function App() {
   return (
-    <div className="App">
+    <div className="container mt-5">
+      {/*
         <Parrafo/>
         <Variables/>
         <Eventos/>
         <Contador/>
-        <Listas/>
+        <Listas/>*/
+      }
+        <Formulario/>
+      
     </div>
   );
 }
