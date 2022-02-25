@@ -27,6 +27,9 @@ const Formulario = () => {
             {nombreFruta: fruta, nombreDescripcion: descripcion}
         ])
 
+        e.target.reset()
+        setFruta('')
+        setDescripcion('')
 
     }
 
