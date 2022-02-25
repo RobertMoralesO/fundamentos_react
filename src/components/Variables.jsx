@@ -2,7 +2,7 @@ import React from 'react'
 
 const Variables = () => {
     const saludo = 'Hola mundo desde una constante'
-    const imagen = 'https://picsum.photos/500'
+    const imagen = 'https://picsum.photos/200'
     const texto_imagen = 'Imagen aleatoria'
 
   return (
