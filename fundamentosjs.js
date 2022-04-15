@@ -137,3 +137,43 @@ console.log(resultado)
 const numero2 = (num) => {
   return `el número es: ${num}`;
 };
+
+// Destructuring Objects
+
+const mascota = {
+  nombre: 'Tom',
+  edad: 10,
+  vivo: true,
+  razas: ['peludo', 'negro']
+}
+
+console.log(mascota.razas[0])
+console.log(mascota.nombre)
+
+const {nombre, vivo, razas} = mascota
+console.log(nombre)
+console.log(vivo)
+console.log(razas[0])
+
+const web = {
+  nombre: 'certika.co',
+  links: {
+    enlace: 'www.certika.co'
+  },
+  redesSociales:{
+    youtube:{
+      enlace: 'youtube.com/certika',
+      nombre: 'certika yb'
+    },
+    facebook:{
+      enlace: 'facebook.com/certika',
+      nombre: 'Certika fb'
+    }
+  }
+}
+
+const enlaceYT = web.redesSociales.youtube.enlace
+console.log(enlaceYT)
+const {enlace} = web.redesSociales.youtube
+const {redesSociales} = web
+console.log(redesSociales.youtube.enlace)
