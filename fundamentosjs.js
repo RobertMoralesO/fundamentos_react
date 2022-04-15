@@ -72,3 +72,53 @@ const persona = {
 persona.edad = 33;
 persona.nombre = "Sergio";
 console.log(persona);
+
+// Funciones
+
+/*
+function sumar(num1, num2) {
+  console.log(num1 + num2);
+}
+*/
+
+//sumar(10, 20)
+//const s = sumar;
+//s(10, 20);
+
+// Función Flecha
+const sumar = (num1, num2) => {
+  console.log(num1 + num2);
+};
+//sumar(10, 20)
+
+const sumarDos = num1 => {
+  console.log(num1);
+};
+
+const sumarDos2 = () => {
+  console.log('No tiene parámetros');
+};
+
+//sumarDos(50);
+
+/*const sumarTres = num1 =>{
+  return num1
+}
+
+console.log(sumarTres(5))
+*/
+
+const SumarTres = num1 => num1 * 4
+
+console.log(SumarTres(5))
+
+const sumarCuatro = (num1, num2) => {
+  return 'La suma es: ' + (num1 + num2)
+}
+
+console.log(sumarCuatro(10, 20))
+
+const sumarCinco = (num1, num2) => 'La suma es: '+(num1 + num2)
+
+
+console.log(sumarCinco(10, 20))
