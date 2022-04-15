@@ -122,3 +122,18 @@ const sumarCinco = (num1, num2) => 'La suma es: '+(num1 + num2)
 
 
 console.log(sumarCinco(10, 20))
+
+
+// Template String
+
+const numero = (num) => {
+  return "el número es: " + num;
+};
+
+const resultado = numero(10)
+console.log(resultado)
+
+//backtick
+const numero2 = (num) => {
+  return `el número es: ${num}`;
+};
