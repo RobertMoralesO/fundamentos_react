@@ -1,9 +1,11 @@
 import React from 'react'
+import {nanoid} from 'nanoid'
 
 const Formulario = () => {
     const [fruta, setFruta] = React.useState('')
     const [descripcion, setDescripcion] = React.useState('')
     const [listaFrutas, setListaFrutas] = React.useState([])
+    const [id, setId] = React.useState('')
 
     const guardarFrutas = (e) =>{
         e.preventDefault()
@@ -20,12 +22,22 @@ const Formulario = () => {
 
         setListaFrutas([
             ... listaFrutas,
-            {nombreFruta: fruta, nombreDescripcion: descripcion}
+            {id:nanoid(), nombreFruta: fruta, nombreDescripcion: descripcion}
         ])
 
         e.target.reset()
         setFruta('')
         setDescripcion('')
+    }
+
+    const editar = item =>{
+        setFruta(item.nombreFruta)
+        setDescripcion(item.nombreDescripcion)
+    }
+
+    const eliminar = id =>{
+        const aux = listaFrutas.filter(item => item.id !== id)
+        setListaFrutas(aux)
     }
 
 
@@ -38,13 +50,13 @@ const Formulario = () => {
                 <h4 className='text-center'>Listado de Frutas</h4>
                 <ul className='list-group'>
                     {
-                        listaFrutas.map((item,index)=>(
-                            <li className='list-group-item' key={index}>
-                                <spam className='lead'>{item.nombreFruta}-{item.nombreDescripcion}</spam>
-                                <button className='btn btn-danger btn-sm float-end mx-2'>
+                        listaFrutas.map(item=>(
+                            <li className='list-group-item' key={item.id}>
+                                <span className='lead'>{item.nombreFruta}-{item.nombreDescripcion}</span>
+                                <button className='btn btn-danger btn-sm float-end mx-2' onClick={()=> eliminar(item.id)}>
                                 Eliminar
                                 </button>
-                                <button className='btn btn-warning btn-sm float-end'>
+                                <button className='btn btn-warning btn-sm float-end'onClick={()=>editar(item)}>
                                 Editar
                                 </button>
                             </li>    
@@ -60,12 +72,14 @@ const Formulario = () => {
                     type = "text"
                     placeholder='Ingrese Fruta'
                     onChange={(e)=> setFruta(e.target.value)}
+                    value = {fruta}
                     />
                     <input 
                     className='form-control mb-2'
                     placeholder='Ingrese Descripción'
                     type="text"
                     onChange={(e)=> setDescripcion(e.target.value)}
+                    value={descripcion}
                     />
                     <button 
                     className='btn btn-primary btn-block'
