@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {nanoid} from 'nanoid'
 
 const Formulario = () => {
@@ -6,17 +6,19 @@ const Formulario = () => {
     const [descripcion, setDescripcion] = React.useState('')
     const [listaFrutas, setListaFrutas] = React.useState([])
     const [id, setId] = React.useState('')
+    const [modoEdicion, setModoEdicion] = React.useState(false)
+    const [error, setError] = React.useState(null)
 
     const guardarFrutas = (e) =>{
         e.preventDefault()
 
         if(!fruta.trim()){
-            alert('Digite la Fruta')
+           setError('Digite la Fruta')
             return
         }
 
         if(!descripcion.trim()){
-            alert('Digite la Descripción')
+            setError('Digite la Descripción')
             return
         }
 
@@ -28,18 +30,53 @@ const Formulario = () => {
         e.target.reset()
         setFruta('')
         setDescripcion('')
+        setError(null)
     }
 
     const editar = item =>{
         setFruta(item.nombreFruta)
         setDescripcion(item.nombreDescripcion)
+        setModoEdicion(true)
+        setId(item.id)
     }
+
+    const editarFrutas = e =>{
+        e.preventDefault()
+
+        if(!fruta.trim()){
+            setError('Digite la Fruta')
+             return
+         }
+ 
+         if(!descripcion.trim()){
+             setError('Digite la Descripción')
+             return
+         }
+
+        const arrayEditado = listaFrutas.map(
+            item => item.id ===id ? {id:id, nombreFruta:fruta, nombreDescripcion: descripcion}: item
+        )
+
+        setListaFrutas(arrayEditado)
+        setFruta('')
+        setDescripcion('')
+        setId('')
+        setModoEdicion(false)
+        setError(null)
+    } 
 
     const eliminar = id =>{
         const aux = listaFrutas.filter(item => item.id !== id)
         setListaFrutas(aux)
     }
 
+    const cancelar = () =>{
+        setModoEdicion(false)
+        setFruta('')
+        setId('')
+        setDescripcion('')
+        setError(null)
+    }
 
   return (
     <div className='container mt-5'>
@@ -65,8 +102,15 @@ const Formulario = () => {
                 </ul>
             </div>
             <div className='col-4'>
-                <h4 className='text-center'></h4>
-                <form onSubmit ={guardarFrutas}>
+                <h4 className='text-center'>
+                    {
+                        modoEdicion ? 'Editar Frutas' : 'Agregar Frutas'
+                    }
+                    </h4>
+                <form onSubmit ={modoEdicion ? editarFrutas: guardarFrutas}>
+                    {
+                        error ? <span className='text-danger'>{error}</span> : null
+                    }
                     <input 
                     className='form-control mb-2'
                     type = "text"
@@ -81,10 +125,29 @@ const Formulario = () => {
                     onChange={(e)=> setDescripcion(e.target.value)}
                     value={descripcion}
                     />
-                    <button 
-                    className='btn btn-primary btn-block'
-                    type='submit'
-                    >Agregar</button>
+
+                    {
+                        modoEdicion ?
+                        (
+                            <>
+                                <button 
+                                className='btn btn-warning btn-block'
+                                type='submit'
+                                >Editar</button>
+                                <button 
+                                className='btn btn-dark btn-block mx-2'
+                                onClick={() => cancelar()}
+                                >Cancelar</button>
+                            </>
+                        )
+                        :
+
+                            <button 
+                            className='btn btn-primary btn-block'
+                            type='submit'
+                            >Agregar</button>
+
+                        }
                 </form>
             </div>
         </div>
