@@ -203,3 +203,22 @@ const obtenerPersonajes = async () => {
 };
 
 obtenerPersonajes();
+
+
+//Objeto Literal
+
+const persona = {
+  nombre: 'Roberto',
+  apellido: 'Morales',
+  edad: 32,
+  direccion:{
+    ciudad: 'Barranquilla',
+    pais: 'Colombia'
+  }
+}
+
+const persona2 = {...persona}
+
+persona2.nombre = 'Carlos'
+console.log(persona)
+console.log(persona2)
