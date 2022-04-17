@@ -46,22 +46,28 @@ const Formulario = () => {
             return
         }
 
-        /*setListaFrutas([
-            ... listaFrutas,
-            {id:nanoid(), nombreFruta: fruta, nombreDescripcion: descripcion}
-        ])*/
-        const db = firebase.firestore()
-        const nuevaFruta = {
-            nombreFruta: fruta,
-            nombreDescripcion: descripcion
+        try{
+            const db = firebase.firestore()
+            const nuevaFruta = {
+                nombreFruta: fruta,
+                nombreDescripcion: descripcion
+            }
+
+            const data = await db.collection('frutas').add(nuevaFruta)
+
+            setListaFrutas([
+                ... listaFrutas,
+                {id:nanoid(), nombreFruta: fruta, nombreDescripcion: descripcion}
+            ])
+
+            e.target.reset()
+            setFruta('')
+            setDescripcion('')
+            setError(null)
+        }catch(error){
+            console.log(error)
         }
-
-        const data = await db.collection('frutas').add(nuevaFruta)
-
-        e.target.reset()
-        setFruta('')
-        setDescripcion('')
-        setError(null)
+        
     }
 
     const editar = item =>{
@@ -71,7 +77,7 @@ const Formulario = () => {
         setId(item.id)
     }
 
-    const editarFrutas = e =>{
+    const editarFrutas = async e =>{
         e.preventDefault()
 
         if(!fruta.trim()){
@@ -84,21 +90,42 @@ const Formulario = () => {
              return
          }
 
-        const arrayEditado = listaFrutas.map(
-            item => item.id ===id ? {id:id, nombreFruta:fruta, nombreDescripcion: descripcion}: item
-        )
+         try{
+             const db = firebase.firestore()
+             await db.collection('frutas').doc(id).update({
+                 nombreFruta:fruta,
+                 nombreDescripcion:descripcion
+             })
+        
+             const arrayEditado = listaFrutas.map(
+                item => item.id ===id ? {id:id, nombreFruta:fruta, nombreDescripcion: descripcion}: item
+            )
+    
+            setListaFrutas(arrayEditado)
+            setFruta('')
+            setDescripcion('')
+            setId('')
+            setModoEdicion(false)
+            setError(null)
 
-        setListaFrutas(arrayEditado)
-        setFruta('')
-        setDescripcion('')
-        setId('')
-        setModoEdicion(false)
-        setError(null)
+         }catch(error){
+             console.log(error)
+         }
+
+        
     } 
 
-    const eliminar = id =>{
-        const aux = listaFrutas.filter(item => item.id !== id)
-        setListaFrutas(aux)
+    const eliminar = async id =>{
+        try{
+            const db = firebase.firestore()
+            await db.collection('frutas').doc(id).delete()
+            const aux = listaFrutas.filter(item => item.id !== id)
+            setListaFrutas(aux)
+        }catch(error){
+            console.log(error)
+        }
+
+        
     }
 
     const cancelar = () =>{
