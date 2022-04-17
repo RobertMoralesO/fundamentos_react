@@ -222,3 +222,81 @@ const persona2 = {...persona}
 persona2.nombre = 'Carlos'
 console.log(persona)
 console.log(persona2)
+
+//Arreglos
+
+const arreglo = [1, 2, 3, 4];
+const arreglo2 = [...arreglo, 100];
+
+arreglo[0] = 50;
+
+//console.log(arreglo);
+//console.log(arreglo2);
+
+const a = new Array(100);
+//console.log(a)
+
+// FUNCIÓN MAP
+
+console.log("Antes del map: " + arreglo);
+const map = arreglo.map(function () {
+  return 5;
+});
+
+const map2 = arreglo.map(() => {
+  return 5;
+});
+
+const map3 = arreglo.map(() => 5);
+
+const map4 = arreglo.map(() => 5);
+console.log(map);
+console.log("Después del map: " + map4);
+
+// Crear un array que dado un array inicial regrese
+// la multiplicación de sus elementos por 2
+
+const arreglo3 = [1, 2, 3, 4];
+
+const respuesta = arreglo3.map((item) => item * 2);
+console.log("Arreglo Inicial: " + arreglo3);
+console.log("Respuesta: " + respuesta);
+
+// FUNCIÓN FIND
+
+const array1 = [5, 12, 8, 130, 44];
+
+const found = array1.find(element => element > 10);
+
+console.log(found);
+// expected output: 12
+
+// FUNCIÓN FILTER
+
+const array2 = [5, 12, 8, 130, 44];
+
+const found2 = array2.filter(element => element > 10);
+
+console.log(found2);
+// expected output: 12, 130, 44
+
+// OPERADOR TERNARIO
+
+function getFee(isMember) {
+  return (isMember ? '$2.00' : '$10.00');
+}
+
+console.log(getFee(true));
+// expected output: "$2.00"
+
+console.log(getFee(false));
+// expected output: "$10.00"
+
+console.log(getFee(null));
+// expected output: "$10.00"
+
+console.log(getFee(0));
+// expected output: "$10.00"
+
+console.log(getFee(50));
+// expected output: "$10.00"
