@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import {nanoid} from 'nanoid'
+import {firebase} from '../firebase'
 
 const Formulario = () => {
     const [fruta, setFruta] = React.useState('')
@@ -9,7 +10,30 @@ const Formulario = () => {
     const [modoEdicion, setModoEdicion] = React.useState(false)
     const [error, setError] = React.useState(null)
 
-    const guardarFrutas = (e) =>{
+    React.useEffect(()=>{
+         const obtenerDatos= async () =>{
+             try{
+                 const db = firebase.firestore()
+                 const data = await db.collection('frutas').get()
+                 const arrayData= data.docs.map(item => (
+                     {
+                         id: item.id, ... item.data()
+                     }
+                 ))
+                 //console.log(arrayData)
+
+                 setListaFrutas(arrayData)
+
+             }catch(error){
+                 console.log(error)
+             }
+         }
+
+         obtenerDatos();
+    })
+
+
+    const guardarFrutas = async (e) =>{
         e.preventDefault()
 
         if(!fruta.trim()){
@@ -22,10 +46,17 @@ const Formulario = () => {
             return
         }
 
-        setListaFrutas([
+        /*setListaFrutas([
             ... listaFrutas,
             {id:nanoid(), nombreFruta: fruta, nombreDescripcion: descripcion}
-        ])
+        ])*/
+        const db = firebase.firestore()
+        const nuevaFruta = {
+            nombreFruta: fruta,
+            nombreDescripcion: descripcion
+        }
+
+        const data = await db.collection('frutas').add(nuevaFruta)
 
         e.target.reset()
         setFruta('')
