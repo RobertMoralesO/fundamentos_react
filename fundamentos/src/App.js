@@ -7,12 +7,13 @@ import Listas from './components/Listas';
 import PeticionApi from './components/PeticionApi';
 import Formulario from './components/Formulario';
 import './App.css';
+import PruebaPropiedades from './components/PruebaPropiedades';
 
 function App() {
   return (
   <>
       
-      <Formulario/>
+      <PruebaPropiedades  titulo = 'Esto es un título'/>
   </>
   );
 }
