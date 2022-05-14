@@ -13,7 +13,9 @@ function App() {
   return (
   <>
       
-      <PruebaPropiedades  titulo = 'Esto es un título'/>
+      <Contador valor_inicial={50}/>
+      {// <PruebaPropiedades  titulo = 'Esto es un título'/>
+      }
   </>
   );
 }
